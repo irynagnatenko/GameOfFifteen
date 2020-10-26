@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.List;
  *
  *   TODO: Kontrollera att bara knapparna intill blank knapp byter nummer.
  *   TODO: Nollställ knapp 16 varje gång man trycker på "new game".
- *   TODO: Skriv ut en text att man vunnit när alla knappar är på plats.
+ *   KLAR: Skriv ut en text att man vunnit när alla knappar är på plats.
+ *   TODO: ?? add a method that checks that the game is solvable
  *
  *
  */
@@ -25,6 +27,7 @@ public class InlUp3 extends JFrame implements ActionListener {
 
     JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, newGame;
     static List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+    static List<String> winningNumbers = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
 
 
     public InlUp3() {
@@ -65,6 +68,7 @@ public class InlUp3 extends JFrame implements ActionListener {
         b15.setBounds(170, 270, 80, 80);
         b16.setBounds(250, 270, 80, 80);
         newGame.setBounds(120, 370, 100, 40);
+        newGame.setBackground(Color.CYAN);
 
 
         add(b1);
@@ -120,10 +124,12 @@ public class InlUp3 extends JFrame implements ActionListener {
         InlUp3 i = new InlUp3();
         shuffleArray(numbers);
 
+
     }
 
     public static void shuffleArray(List<Integer> numbers) {
         Collections.shuffle(numbers);
+
 
     }
 
@@ -528,9 +534,43 @@ public class InlUp3 extends JFrame implements ActionListener {
             }
         }
 
-
+        checkSolution();
     }
 
+    // added a method to check if the current sequence of buttons equals the winning sequence
+    public void checkSolution() {
 
+        List<String> current = new ArrayList<>();
+        current.add(b1.getText());
+        current.add(b2.getText());
+        current.add(b3.getText());
+        current.add(b4.getText());
+        current.add(b5.getText());
+        current.add(b6.getText());
+        current.add(b7.getText());
+        current.add(b8.getText());
+        current.add(b9.getText());
+        current.add(b10.getText());
+        current.add(b11.getText());
+        current.add(b12.getText());
+        current.add(b13.getText());
+        current.add(b14.getText());
+        current.add(b15.getText());
+
+
+      if (compareList(winningNumbers, current)) {
+           JOptionPane.showMessageDialog(null, "You won the game!");
+        }
+    }
+
+    public static boolean compareList(List ls1, List ls2) {
+
+        return ls1.equals(ls2);
+
+
+
+
+    }
 }
+
 
